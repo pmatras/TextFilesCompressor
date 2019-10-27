@@ -16,11 +16,15 @@ import textfilescompressor.exception.WrongFilePassedException;
 public class Model {
     /**
      * fileToCompressName - a file which will be compressed
-     * fileToDecompressName - a file which will be decompressed
-     * outputFileName - a file when will be saved compressed or decompressed data
      */
     private String fileToCompressName;
+    /**
+     * fileToDecompressName - a file which will be decompressed
+     */
     private String fileToDecompressName;
+    /**
+     * outputFileName - a file when will be saved compressed or decompressed data
+     */
     private String outputFileName;
     
     /**
@@ -41,6 +45,7 @@ public class Model {
      * @return true if compression of file was successfull
      * @throws WrongFilePassedException if FileNotFoundException was catched, method will throw this
      * @throws IOException throws if during saving compressed data to file exception will occur
+     * Method for compressing file passed as cmd argument
      */
     public boolean compressFile() throws WrongFilePassedException, IOException {
         
@@ -79,6 +84,7 @@ public class Model {
      * @return true if decompression of file was successfull
      * @throws WrongFilePassedException if FileNotFoundException was catched during opening files, method will throw this 
      * @throws IOException throws if during saving decompressed data to file exception will occur
+     * Method for decompressing file passed as a cmd argument
      */
     public boolean decompressFile() throws WrongFilePassedException, IOException {
         
