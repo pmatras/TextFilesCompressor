@@ -1,6 +1,9 @@
 package textfilescompressor.controller;
 
 import textfilescompressor.view.View;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import textfilescompressor.model.Model;
 
 /**
  *
@@ -11,6 +14,51 @@ public class Controller {
     private String inFileName;
     private String outFileName;
     private String mode;
+    
+     public void startProgram(final String[] args) {
+        
+        setArguments(args);
+        View view = new View();
+        view.displayWelcomeScreen();
+        
+        Model model;
+        if(this.mode.equals("compress")) {
+            
+            model =  new Model(inFileName, "", outFileName);
+            
+            try {
+                if(model.compressFile()) {
+                    
+                    view.displayMessage("File compressed succesfully!");
+                }
+            } catch(FileNotFoundException e) {
+                
+                view.displayMessage("File to compress not found: " + e.getMessage());
+            } catch(IOException e) {
+                
+                view.displayMessage("Problem occured while compressing file: " + e.getMessage());
+            }
+            
+        } else if(this.mode.equals("decompress")) {
+            
+            model = new Model("", inFileName, outFileName);
+            
+            try {
+                if(model.decompressFile()) {
+                    
+                    view.displayMessage("File decompressed");
+                }
+            } catch(FileNotFoundException e) {
+                    
+                    view.displayMessage("Problem while opening file to decompress. Can not finish: " + e.getMessage());
+                 
+            } catch(IOException e) {
+                
+                view.displayMessage("Problem while decompressing file. Can not finish: " + e.getMessage());
+            }
+            
+    }
+    }
       
     private void setArguments(String[] args) {
         
