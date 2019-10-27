@@ -14,7 +14,11 @@ import textfilescompressor.exception.WrongFilePassedException;
  * @version 1.0
  */
 public class Model {
-    
+    /**
+     * fileToCompressName - a file which will be compressed
+     * fileToDecompressName - a file which will be decompressed
+     * outputFileName - a file when will be saved compressed or decompressed data
+     */
     private String fileToCompressName;
     private String fileToDecompressName;
     private String outputFileName;
