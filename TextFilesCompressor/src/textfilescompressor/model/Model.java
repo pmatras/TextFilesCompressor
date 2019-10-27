@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException; 
 import java.util.zip.Deflater; 
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 /**
  *
@@ -52,6 +53,38 @@ public class Model {
      
         inputFile.close(); 
         compressedFile.close(); 
+        
+        return true;
+    }
+    
+    public boolean decompressFile() throws FileNotFoundException, IOException {
+        
+        FileInputStream inputFile = null;
+        FileOutputStream outputFile = null;
+        try {
+            inputFile = new FileInputStream(this.fileToDecompressName);
+            outputFile = new FileOutputStream(this.outputFileName); 
+        } catch(FileNotFoundException e) {
+            
+            throw e;
+        }
+  
+        InflaterInputStream decompressedFile =new InflaterInputStream(inputFile); 
+        
+        int data; 
+        
+        try { 
+            
+            while((data = decompressedFile.read())!=-1) { 
+                outputFile.write(data); 
+            }      
+        } catch(IOException e) {
+            
+            throw e;
+        }
+        
+        outputFile.close(); 
+        decompressedFile.close(); 
         
         return true;
     }
