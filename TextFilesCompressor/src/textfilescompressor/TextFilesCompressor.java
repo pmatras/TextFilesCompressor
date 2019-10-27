@@ -11,10 +11,11 @@ public class TextFilesCompressor {
 
     /**
      * @param args the command line arguments
-     * @param -c option in command line to choose compress file mode
-     * @param -d option in command line to choose decompress file mode
-     * @param -i specifies input file name
-     * @param -o specifies output file name
+     * <br>Order of cmd arguments:
+     * <br>-c option in command line to choose compress file mode
+     * <br>-d option in command line to choose decompress file mode
+     * <br>-i specifies input file name
+     * <br>-o specifies output file name
      */
     public static void main(String[] args) {
         

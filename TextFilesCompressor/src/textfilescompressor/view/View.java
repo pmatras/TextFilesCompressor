@@ -23,6 +23,7 @@ public class View {
     /**
      * 
      * @param message message which will be displayed on screen 
+     * Display message passed as a argument on screen
      */
     public void displayMessage(String message) {
         

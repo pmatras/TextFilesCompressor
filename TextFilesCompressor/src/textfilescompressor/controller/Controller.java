@@ -14,16 +14,21 @@ import textfilescompressor.exception.WrongFilePassedException;
 public class Controller {
     /**
      * inFileName - file which will be compressed or decompressed
-     * outFileName - file when compressed or decompressed data will be saved
-     * mode - mode of program (compressing or decompressing)
      */
     private String inFileName;
+    /**
+     * outFileName - file when compressed or decompressed data will be saved
+     */
     private String outFileName;
+    /**
+     * mode - mode of program (compressing or decompressing)
+     */
     private String mode;
     
     /**
-     * Main method of whole application - handles users choice of working mode and process everything
+     * 
      * @param args command line arguments
+     * Main method of whole application - handles users choice of working mode and process everything
      */
      public void startProgram(final String[] args) {
         
@@ -71,8 +76,9 @@ public class Controller {
     }
       
      /**
-      * Parses the users command line arguments
+      *
       * @param args command line arguments
+      * Parses the users command line arguments
       */
     private void setArguments(String[] args) {
         
