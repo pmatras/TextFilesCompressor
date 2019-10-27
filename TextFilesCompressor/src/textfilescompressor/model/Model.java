@@ -17,10 +17,10 @@ public class Model {
     private String fileToDecompressName;
     private String outputFileName;
     
-    public Model(final String inFileName, final String outFileName, final String outputFileName) {
+    public Model(final String fileToCompressName, final String fileToDecompressName, final String outputFileName) {
         
-        this.fileToCompressName = inFileName;
-        this.fileToDecompressName = outFileName;
+        this.fileToCompressName = fileToCompressName;
+        this.fileToDecompressName = fileToDecompressName;
         this.outputFileName = outputFileName;
     }
     
