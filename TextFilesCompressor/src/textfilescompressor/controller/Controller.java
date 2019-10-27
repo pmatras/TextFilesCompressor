@@ -4,6 +4,7 @@ import textfilescompressor.view.View;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import textfilescompressor.model.Model;
+import textfilescompressor.exception.WrongFilePassedException;
 
 /**
  *
@@ -31,7 +32,7 @@ public class Controller {
                     
                     view.displayMessage("File " + inFileName + " compressed succesfully into file " + outFileName);
                 }
-            } catch(FileNotFoundException e) {
+            } catch(WrongFilePassedException e) {
                 
                 view.displayMessage("File to compress not found: " + e.getMessage());
             } catch(IOException e) {
@@ -48,7 +49,7 @@ public class Controller {
                     
                     view.displayMessage("File " + inFileName + " decompressed successfully into file " + outFileName);
                 }
-            } catch(FileNotFoundException e) {
+            } catch(WrongFilePassedException e) {
                     
                     view.displayMessage("Problem while opening file to decompress. Can not finish: " + e.getMessage());
                  
