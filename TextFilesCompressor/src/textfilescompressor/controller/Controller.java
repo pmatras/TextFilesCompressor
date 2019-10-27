@@ -29,7 +29,7 @@ public class Controller {
             try {
                 if(model.compressFile()) {
                     
-                    view.displayMessage("File compressed succesfully!");
+                    view.displayMessage("File " + inFileName + " compressed succesfully into file " + outFileName);
                 }
             } catch(FileNotFoundException e) {
                 
@@ -46,7 +46,7 @@ public class Controller {
             try {
                 if(model.decompressFile()) {
                     
-                    view.displayMessage("File decompressed");
+                    view.displayMessage("File " + inFileName + " decompressed successfully into file " + outFileName);
                 }
             } catch(FileNotFoundException e) {
                     
@@ -65,7 +65,7 @@ public class Controller {
         if(args[0].equals("-c")) {
             
             this.mode = "compress";
-        } else if(args[1].equals("-d")) {
+        } else if(args[0].equals("-d")) {
             
             this.mode = "decompress";
         }
