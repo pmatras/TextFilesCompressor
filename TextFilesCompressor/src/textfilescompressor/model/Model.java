@@ -4,9 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException; 
 import java.io.FileOutputStream; 
 import java.io.IOException; 
-import java.util.zip.Deflater; 
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
+import textfilescompressor.exception.WrongFilePassedException;
 
 /**
  *
@@ -25,7 +25,7 @@ public class Model {
         this.outputFileName = outputFileName;
     }
     
-    public boolean compressFile() throws FileNotFoundException, IOException {
+    public boolean compressFile() throws WrongFilePassedException, IOException {
         
         FileInputStream inputFile = null;
         FileOutputStream outputFile = null;
@@ -35,7 +35,7 @@ public class Model {
             outputFile = new FileOutputStream(this.outputFileName); 
         } catch(FileNotFoundException e) {
             
-            throw e;
+            throw new WrongFilePassedException(e.getMessage());
         }
  
         DeflaterOutputStream compressedFile = new DeflaterOutputStream(outputFile); 
@@ -43,7 +43,7 @@ public class Model {
         int data; 
         
         try {
-            while ((data = inputFile.read())!=-1) { 
+            while ((data = inputFile.read())!= -1) { 
                 compressedFile.write(data); 
             } 
         } catch(IOException e) {
@@ -57,7 +57,7 @@ public class Model {
         return true;
     }
     
-    public boolean decompressFile() throws FileNotFoundException, IOException {
+    public boolean decompressFile() throws WrongFilePassedException, IOException {
         
         FileInputStream inputFile = null;
         FileOutputStream outputFile = null;
@@ -66,16 +66,16 @@ public class Model {
             outputFile = new FileOutputStream(this.outputFileName); 
         } catch(FileNotFoundException e) {
             
-            throw e;
+            throw new WrongFilePassedException(e.getMessage());
         }
   
-        InflaterInputStream decompressedFile =new InflaterInputStream(inputFile); 
+        InflaterInputStream decompressedFile = new InflaterInputStream(inputFile); 
         
         int data; 
         
         try { 
             
-            while((data = decompressedFile.read())!=-1) { 
+            while((data = decompressedFile.read())!= -1) { 
                 outputFile.write(data); 
             }      
         } catch(IOException e) {
