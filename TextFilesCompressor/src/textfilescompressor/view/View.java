@@ -26,4 +26,9 @@ public class View {
         System.out.flush(); 
     }
     
+    public void displayMessage(String message) {
+        
+        System.out.println(message);
+    }
+    
 }
