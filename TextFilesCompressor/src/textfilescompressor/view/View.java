@@ -5,6 +5,7 @@ import java.util.Scanner;
 /**
  *
  * @author Piotr Matras
+ * @version 1.0
  */
 public class View {    
      
@@ -26,6 +27,10 @@ public class View {
         System.out.flush(); 
     }
     
+    /**
+     * 
+     * @param message message which will be displayed on screen 
+     */
     public void displayMessage(String message) {
         
         System.out.println(message);

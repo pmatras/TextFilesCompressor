@@ -9,6 +9,7 @@ import textfilescompressor.exception.WrongFilePassedException;
 /**
  *
  * @author Piotr Matras
+ * @version 1.0
  */
 public class Controller {
     
@@ -16,6 +17,10 @@ public class Controller {
     private String outFileName;
     private String mode;
     
+    /**
+     * 
+     * @param args command line arguments
+     */
      public void startProgram(final String[] args) {
         
         setArguments(args);
@@ -61,6 +66,10 @@ public class Controller {
     }
     }
       
+     /**
+      * 
+      * @param args command line arguments
+      */
     private void setArguments(String[] args) {
         
         if(args[0].equals("-c")) {

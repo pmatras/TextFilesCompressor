@@ -11,6 +11,7 @@ import textfilescompressor.exception.WrongFilePassedException;
 /**
  *
  * @author Piotr Matras
+ * @version 1.0
  */
 public class Model {
     
@@ -18,6 +19,12 @@ public class Model {
     private String fileToDecompressName;
     private String outputFileName;
     
+    /**
+     * 
+     * @param fileToCompressName name of file which will be compressed (empty if user chose decompress file mode)
+     * @param fileToDecompressName name of file which will be decompressed (empty if user chose compress file mode)
+     * @param outputFileName name of file which will store compressed or decompressed input file chosen by user
+     */
     public Model(final String fileToCompressName, final String fileToDecompressName, final String outputFileName) {
         
         this.fileToCompressName = fileToCompressName;
@@ -25,6 +32,12 @@ public class Model {
         this.outputFileName = outputFileName;
     }
     
+    /**
+     * 
+     * @return true if compression of file was successfull
+     * @throws WrongFilePassedException if FileNotFoundException was catched, method will throw this
+     * @throws IOException throws if during saving compressed data to file exception will occur
+     */
     public boolean compressFile() throws WrongFilePassedException, IOException {
         
         FileInputStream inputFile = null;
@@ -57,6 +70,12 @@ public class Model {
         return true;
     }
     
+    /**
+     * 
+     * @return true if decompression of file was successfull
+     * @throws WrongFilePassedException if FileNotFoundException was catched during opening files, method will throw this 
+     * @throws IOException throws if during saving decompressed data to file exception will occur
+     */
     public boolean decompressFile() throws WrongFilePassedException, IOException {
         
         FileInputStream inputFile = null;
