@@ -8,13 +8,6 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class View {    
-     
-    private final Scanner scanner;
-    
-    public View() {
-        
-        this.scanner = new Scanner(System.in);
-    }
     
     public void displayWelcomeScreen() {
         
