@@ -1,6 +1,7 @@
 package textfilescompressor.view;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -53,7 +54,16 @@ public class View {
         view.displayMessage("Please enter output file name with its extension:");
         String usersOutFileName = scanner.next();
         view.displayMessage("Please enter mode of program\n1.compress,\n2.decompress.\nYour choice: ");
-        int usersMode = scanner.nextInt();
+        
+        int usersMode = 0;
+        try {
+            
+            usersMode = scanner.nextInt();            
+        } catch(InputMismatchException e) {
+            
+            view.displayMessage("Wrong choice. Default mode - compress will be used.");
+            usersMode = 1;
+        }
         
         args[0] = usersInFileName;
         args[1] = usersOutFileName;
