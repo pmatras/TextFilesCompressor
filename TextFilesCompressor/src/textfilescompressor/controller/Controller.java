@@ -2,6 +2,8 @@ package textfilescompressor.controller;
 
 import textfilescompressor.view.View;
 import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import textfilescompressor.model.Model;
 import textfilescompressor.model.WrongFilePassedException;
 
@@ -23,6 +25,15 @@ public class Controller {
      * mode - mode of program (compressing or decompressing)
      */
     private String mode;
+    /**
+     * ArgsCount - constant variable which defines default number of args to get from user
+     * (if not passed as CMD args)
+     */
+    private final int ArgsCount = 3;
+     /**
+     * scanner - Scanner object to get input from user
+     */
+    private final Scanner scanner = new Scanner(System.in);
     
     /**
      * 
@@ -39,8 +50,7 @@ public class Controller {
         } catch(ArrayIndexOutOfBoundsException e) {
             
             view.displayMessage("Wrong run arguments passed!");
-            args = view.getArgsFromUser();
-            setArgumentsFromUser(args);
+            getArgsFromUser(view);
         }
         
         view.displayWelcomeScreen();
@@ -109,12 +119,46 @@ public class Controller {
             
             throw e;           
         }        
-    }    
-    
-    private void setArgumentsFromUser(final String[] args) {
+    }        
+    /**
+     * 
+     * @param view object of View class to display prompts to user
+     * Method gets arguments from user, if arguments weren't specified as CMD args
+     */
+    public void getArgsFromUser(final View view) {
+          
+        view.displayMessage("Please enter input file name with its extension:");
+        this.inFileName = scanner.next();
+        view.displayMessage("Please enter output file name with its extension:");
+        this.outFileName = scanner.next();
+        view.displayMessage("Please enter mode of program\n1.compress,\n2.decompress.\nYour choice: ");
         
-        this.inFileName = args[0];
-        this.outFileName = args[1];
-        this.mode = args[2];
+        int usersMode = 0;
+        try {
+            
+            usersMode = scanner.nextInt();            
+        } catch(InputMismatchException e) {
+            
+            view.displayMessage("Wrong choice. Default mode - compress will be used.");
+            usersMode = 1;
+        }
+        
+        switch(usersMode) {
+            case 1: {
+                
+                this.mode = Mode.compress.toString();
+                break;
+            }
+            case 2: {
+                
+               this.mode = Mode.decompress.toString();
+            }
+        }
     }
+    
+     private enum Mode {
+        
+        compress,
+        decompress 
+    }    
 }
