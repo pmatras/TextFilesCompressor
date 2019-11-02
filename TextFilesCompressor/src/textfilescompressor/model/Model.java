@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException; 
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
-import textfilescompressor.exception.WrongFilePassedException;
 
 /**
  *
