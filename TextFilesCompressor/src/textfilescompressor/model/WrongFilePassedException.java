@@ -1,4 +1,4 @@
-package textfilescompressor.exception;
+package textfilescompressor.model;
 
 /**
  *
