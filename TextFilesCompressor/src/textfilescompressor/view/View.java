@@ -1,5 +1,6 @@
 package textfilescompressor.view;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -28,12 +29,6 @@ public class View {
         System.out.println("Welcome in text files compressor application.");
     }
     
-    public void clearScreen() {
-        
-        System.out.print("\033[H\033[2J");  
-        System.out.flush(); 
-    }
-    
     /**
      * 
      * @param message message which will be displayed on screen 
@@ -57,7 +52,7 @@ public class View {
         String usersInFileName = scanner.next();
         view.displayMessage("Please enter output file name with its extension:");
         String usersOutFileName = scanner.next();
-        view.displayMessage("Please enter mode of program\n1. compress,\n2.decompress.: ");
+        view.displayMessage("Please enter mode of program\n1.compress,\n2.decompress.\nYour choice: ");
         int usersMode = scanner.nextInt();
         
         args[0] = usersInFileName;
@@ -74,7 +69,6 @@ public class View {
             }
         }
         
-        view.clearScreen();
         return args;
     }
     
