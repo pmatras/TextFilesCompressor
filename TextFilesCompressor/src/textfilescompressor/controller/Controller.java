@@ -1,7 +1,6 @@
 package textfilescompressor.controller;
 
 import textfilescompressor.view.View;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import textfilescompressor.model.Model;
 import textfilescompressor.model.WrongFilePassedException;
@@ -9,7 +8,7 @@ import textfilescompressor.model.WrongFilePassedException;
 /**
  *
  * @author Piotr Matras
- * @version 1.0
+ * @version 1.0.1
  */
 public class Controller {
     /**
@@ -30,10 +29,20 @@ public class Controller {
      * @param args command line arguments
      * Main method of whole application - handles users choice of working mode and process everything
      */
-     public void startProgram(final String[] args) {
-        
-        setArguments(args);
+     public void startProgram(String[] args) {
+         
         View view = new View();
+        
+        try {
+            
+            setArguments(args);            
+        } catch(ArrayIndexOutOfBoundsException e) {
+            
+            view.displayMessage("Wrong run arguments passed!");
+            args = view.getArgsFromUser();
+            setArgumentsFromUser(args);
+        }
+        
         view.displayWelcomeScreen();
         
         Model model;
@@ -82,23 +91,30 @@ public class Controller {
       */
     private void setArguments(String[] args) {
         
-        if(args[0].equals("-c")) {
+        try {
             
-            this.mode = "compress";
-        } else if(args[0].equals("-d")) {
+            if(args[0].equals("-c")) {
+                this.mode = "compress";
+            } else if(args[0].equals("-d")) {
+                this.mode = "decompress";
+            }
             
-            this.mode = "decompress";
-        }
-        
-        if(args[1].equals("-i")) {
+            if(args[1].equals("-i")) {
+                this.inFileName = args[2];
+            } 
+            if(args[3].equals("-o")) {
+                this.outFileName = args[4];
+            }
+        } catch(ArrayIndexOutOfBoundsException e) {
             
-            this.inFileName = args[2];
-        } 
-        if(args[3].equals("-o")) {
-            
-            this.outFileName = args[4];
-        }
-        
-    }
+            throw e;           
+        }        
+    }    
     
+    private void setArgumentsFromUser(final String[] args) {
+        
+        this.inFileName = args[0];
+        this.outFileName = args[1];
+        this.mode = args[2];
+    }
 }
