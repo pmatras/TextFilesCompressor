@@ -12,9 +12,9 @@ import java.util.zip.InflaterInputStream;
 /**
  *
  * @author Piotr Matras
- * @version 1.0
+ * @version 1.0.1
  */
-public class Model {
+public class Model implements Compressor {
     /**
      * fileToCompressName - a file which will be compressed
      */
@@ -48,6 +48,7 @@ public class Model {
      * @throws IOException throws if during saving compressed data to file exception will occur
      * Method for compressing file passed as cmd argument
      */
+    @Override
     public boolean compressFile() throws WrongFilePassedException, IOException {
         
         FileInputStream inputFile = null;
@@ -95,6 +96,7 @@ public class Model {
      * @throws IOException throws if during saving decompressed data to file exception will occur
      * Method for decompressing file passed as a cmd argument
      */
+    @Override
     public boolean decompressFile() throws WrongFilePassedException, IOException {
         
         FileInputStream inputFile = null;
