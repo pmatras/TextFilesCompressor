@@ -1,6 +1,9 @@
 package textfilescompressor.model;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -133,6 +136,30 @@ public class ModelTest {
         } catch(WrongFilePassedException e) {
             
         }            
+    }
+    /**
+     * Test of both compressFile and decompressFile methods, of class Model
+     * Tests if decompression of file which was compressed by compressFile method by decompressFile method gets original file
+     * @throws java.io.IOException - thrown when error occured while reading/writing to file
+     */
+    @Test
+    public void testIfDecompressedCompressedFileIsTheSameAsOriginal() throws IOException {
+        
+        try {
+            
+            boolean compressedSuccessfully = compressor.compressFile();
+            boolean decompressedSuccessfully = decompressor.decompressFile();            
+        } catch(WrongFilePassedException e) {
+            
+            fail("Failed to compress and then decompress this file");
+        }
+        
+        byte[] originalFile = Files.readAllBytes(Paths.get(fileToCompressName));
+        byte[] decompressedFile = Files.readAllBytes(Paths.get(decompressedOutFileName));
+        
+        boolean expResult = true;
+        assertEquals(expResult, Arrays.equals(originalFile, decompressedFile));
+        
     }
     
 }
