@@ -1,5 +1,6 @@
 package textfilescompressor.model;
 
+import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -57,6 +58,44 @@ public class ModelTest {
         boolean expResult = true;
         boolean result = decompressor.decompressFile();
         assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of compressFile method, of class Model
+     * Tests if method handles passing to method non-existent file
+     * @throws java.io.IOException - thrown when error occured while reading/writing to file, mustn't occur here
+     */
+    @Test
+    public void testCompressFileWithNonExistentFile() throws IOException {
+        
+        Compressor compressor = new Model("nonexistentfile.txt", "", compressedOutFileName);
+        
+        try {
+            
+            compressor.compressFile();  
+            fail("Exception should be thrown when trying to compress un-existent file");
+        } catch(WrongFilePassedException e) {
+            
+        }     
+    }
+    
+     /**
+     * Test of decompressFile method, of class Model
+     * Tests if method handles passing to method non-existent file
+     * @throws java.io.IOException - thrown when error occured while reading/writing to file, mustn't occur here
+     */
+    @Test
+    public void testDecompressFileWithNonExistentFile() throws IOException {
+        
+        Compressor decompressor = new Model("", "nonexistentfile.txt", decompressedOutFileName);
+        
+        try {
+            
+            compressor.decompressFile();  
+            fail("Exception should be thrown when trying to decompress un-existent file");
+        } catch(WrongFilePassedException e) {
+            
+        }     
     }
     
 }
