@@ -59,6 +59,9 @@ public class Model {
         } catch(FileNotFoundException e) {
             
             throw new WrongFilePassedException(e.getMessage());
+        } catch(NullPointerException e) {
+            
+            throw new WrongFilePassedException("File name don't passed");
         }
  
         DeflaterOutputStream compressedFile = new DeflaterOutputStream(outputFile); 
@@ -102,6 +105,9 @@ public class Model {
         } catch(FileNotFoundException e) {
             
             throw new WrongFilePassedException(e.getMessage());
+        } catch(NullPointerException e) {
+            
+            throw new WrongFilePassedException("File name don't passed");
         }
   
         InflaterInputStream decompressedFile = new InflaterInputStream(inputFile); 
