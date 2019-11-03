@@ -4,6 +4,7 @@ import textfilescompressor.view.View;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import textfilescompressor.model.Compressor;
 import textfilescompressor.model.Model;
 import textfilescompressor.model.WrongFilePassedException;
 
@@ -54,7 +55,7 @@ public class Controller {
         
         view.displayWelcomeScreen();
         
-        Model model;
+        Compressor model;
         if(this.mode.equals("compress")) {
             
             model =  new Model(inFileName, "", outFileName);
