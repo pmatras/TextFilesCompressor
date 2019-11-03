@@ -1,6 +1,5 @@
 package textfilescompressor.model;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -32,40 +31,32 @@ public class ModelTest {
     @Before
     public void setUp() {
         
-        Compressor compressor = new Model(fileToCompressName, "", compressedOutFileName);
-        Compressor decompressor = new Model("", fileToDecompressName, decompressedOutFileName);  
-    }
-    
-    @After
-    public void tearDown() {
+        compressor = new Model(fileToCompressName, "", compressedOutFileName);
+        decompressor = new Model("", fileToDecompressName, decompressedOutFileName);  
     }
 
     /**
      * Test of compressFile method, of class Model.
+     * Tests if compression of example file is succesfully
      */
     @Test
     public void testCompressFile() throws Exception {
-        System.out.println("compressFile");
-        Model instance = null;
-        boolean expResult = false;
-        boolean result = instance.compressFile();
+       
+        boolean expResult = true;
+        boolean result = compressor.compressFile();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of decompressFile method, of class Model.
+     * Tests if decompression of example file is succesfully
      */
     @Test
     public void testDecompressFile() throws Exception {
-        System.out.println("decompressFile");
-        Model instance = null;
-        boolean expResult = false;
-        boolean result = instance.decompressFile();
+       
+        boolean expResult = true;
+        boolean result = decompressor.decompressFile();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
