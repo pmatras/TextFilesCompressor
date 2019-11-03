@@ -1,9 +1,7 @@
 package textfilescompressor.model;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -15,32 +13,27 @@ import static org.junit.Assert.*;
  */
 public class ModelTest {
     
-    private String fileToCompressName;
-    private String compressedOutFileName;
-    private String fileToDecompressName;
-    private String decompressedOutFileName;
+    private static String fileToCompressName;
+    private static String compressedOutFileName;
+    private static String fileToDecompressName;
+    private static String decompressedOutFileName;
+    
+    private Compressor compressor;
+    private Compressor decompressor;
     
     public ModelTest() {
         
-        this.fileToCompressName = "test.txt";
-        this.compressedOutFileName = "out.txt";
-        this.fileToDecompressName = "out.txt";
-        this.decompressedOutFileName = "decompressed.txt";
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-        
-        Compressor compressor = new Model("test.txt", "", "out.txt");
-        Compressor decompressor = new Model("", "out.txt", "decompressed.txt");        
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
+        ModelTest.fileToCompressName = "test.txt";
+        ModelTest.compressedOutFileName = "out.txt";
+        ModelTest.fileToDecompressName = "out.txt";
+        ModelTest.decompressedOutFileName = "decompressed.txt";
     }
     
     @Before
     public void setUp() {
+        
+        Compressor compressor = new Model(fileToCompressName, "", compressedOutFileName);
+        Compressor decompressor = new Model("", fileToDecompressName, decompressedOutFileName);  
     }
     
     @After
