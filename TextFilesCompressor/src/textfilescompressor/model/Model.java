@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException; 
 import java.io.FileOutputStream; 
 import java.io.IOException; 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -61,12 +63,17 @@ public class Model {
  
         DeflaterOutputStream compressedFile = new DeflaterOutputStream(outputFile); 
         
-        int data; 
+        int data;
+        List<Integer> dataToWrite = new ArrayList<>(); 
         
         try {
             while ((data = inputFile.read())!= -1) { 
-                compressedFile.write(data); 
+                dataToWrite.add(data);
             } 
+            
+            for(int toWrite : dataToWrite) {
+                compressedFile.write(toWrite);
+            }
         } catch(IOException e) {
             
             throw e;
@@ -100,12 +107,17 @@ public class Model {
         InflaterInputStream decompressedFile = new InflaterInputStream(inputFile); 
         
         int data; 
+        List<Integer> dataToWrite = new ArrayList<>();
         
         try { 
             
             while((data = decompressedFile.read())!= -1) { 
-                outputFile.write(data); 
-            }      
+                dataToWrite.add(data); 
+            }
+            
+            for(int toWrite : dataToWrite) {                
+                outputFile.write(toWrite);
+            }
         } catch(IOException e) {
             
             throw e;
