@@ -44,14 +44,13 @@ public class Controller {
          
         View view = new View();
         
-        try {
-            
-            setArguments(args);            
-        } catch(ArrayIndexOutOfBoundsException e) {
+        if(args.length > 0) {
+            setArguments(args);  
+        } else {
             
             view.displayMessage("Wrong run arguments passed!");
-            getArgsFromUser(view);
-        }
+            getArgsFromUser(view);            
+        }   
         
         view.displayWelcomeScreen();
         
@@ -101,23 +100,29 @@ public class Controller {
       */
     private void setArguments(String[] args) {
         
-        try {
+        String previousParam = "";
+        
+        for(String param : args) {
             
-            if(args[0].equals("-c")) {
-                this.mode = "compress";
-            } else if(args[0].equals("-d")) {
-                this.mode = "decompress";
+            if(param.equals("-c")) {
+                this.mode = Mode.compress.toString();
+                continue;
             }
-            
-            if(args[1].equals("-i")) {
-                this.inFileName = args[2];
-            } 
-            if(args[3].equals("-o")) {
-                this.outFileName = args[4];
+            if(param.equals("-d")) {
+                this.mode = Mode.decompress.toString();
+                continue;
             }
-        } catch(ArrayIndexOutOfBoundsException e) {
-            
-            throw e;           
+            if(previousParam.equals("-i") && !param.equals("-o")) {
+                this.inFileName = param;
+                previousParam = "";
+                continue;
+            }
+            if(previousParam.equals("-o") && !param.equals("-i")) {
+                this.outFileName = param;
+                previousParam = "";
+                continue;
+            }                
+                previousParam = param;                                       
         }        
     }        
     /**
