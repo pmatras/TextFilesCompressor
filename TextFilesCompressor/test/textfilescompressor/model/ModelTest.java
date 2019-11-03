@@ -15,13 +15,29 @@ import static org.junit.Assert.*;
  * Tests for all public methods in Model class
  */
 public class ModelTest {
-    
+    /**
+     * fileToCompressName - name of file which will be compressed
+     */
     private static String fileToCompressName;
+    /**
+     * compressedOutFileName - name of file to save compressed content
+     */
     private static String compressedOutFileName;
+    /**
+     * fileToDecompressName - name of file which will be decompressed
+     */
     private static String fileToDecompressName;
+    /**
+     * decompressedOutFileName - name of file to save decompressed content
+     */
     private static String decompressedOutFileName;
-    
+    /**
+     * compressor - object of Model class to compress file
+     */
     private Compressor compressor;
+    /**
+     * decompressor - object of Model class to decompress file
+     */
     private Compressor decompressor;
     
     public ModelTest() {
@@ -138,7 +154,7 @@ public class ModelTest {
         }            
     }
     /**
-     * Test of both compressFile and decompressFile methods, of class Model
+     * This is not pure unit test - Test both compressFile and decompressFile methods, of class Model
      * Tests if decompression of file which was compressed by compressFile method by decompressFile method gets original file
      * @throws java.io.IOException - thrown when error occured while reading/writing to file
      */
@@ -158,8 +174,6 @@ public class ModelTest {
         byte[] decompressedFile = Files.readAllBytes(Paths.get(decompressedOutFileName));
         
         boolean expResult = true;
-        assertEquals(expResult, Arrays.equals(originalFile, decompressedFile));
-        
-    }
-    
+        assertEquals(expResult, Arrays.equals(originalFile, decompressedFile));        
+    }    
 }
