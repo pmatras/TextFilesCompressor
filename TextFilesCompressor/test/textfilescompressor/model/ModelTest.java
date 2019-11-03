@@ -91,11 +91,48 @@ public class ModelTest {
         
         try {
             
-            compressor.decompressFile();  
+            decompressor.decompressFile();  
             fail("Exception should be thrown when trying to decompress un-existent file");
         } catch(WrongFilePassedException e) {
             
         }     
+    }
+    /**
+     * Test of compressFile method, of class Model
+     * Tests if method handles passing to method null file name
+     * @throws java.io.IOException - thrown when error occured while reading/writing to file, mustn't occur here
+     */ 
+    @Test
+    public void testCompressFileWithNullFileName() throws IOException {
+        
+        Compressor compressor = new Model(null, "", compressedOutFileName);
+        
+        try {
+            
+            compressor.compressFile();  
+            fail("Exception should be thrown when trying to compress null file");
+        } catch(WrongFilePassedException e) {
+            
+        }            
+    }
+    
+     /**
+     * Test of decompressFile method, of class Model
+     * Tests if method handles passing to method non-existent file
+     * @throws java.io.IOException - thrown when error occured while reading/writing to file, mustn't occur here
+     */
+    @Test
+    public void testDecompressFileWithNullFileName() throws IOException {
+        
+        Compressor decompressor = new Model("", null, decompressedOutFileName);
+        
+        try {
+            
+            decompressor.compressFile();  
+            fail("Exception should be thrown when trying to decompress null file");
+        } catch(WrongFilePassedException e) {
+            
+        }            
     }
     
 }
