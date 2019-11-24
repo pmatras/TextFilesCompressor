@@ -27,10 +27,6 @@ public class Server implements Closeable {
         this.serverSocket = new ServerSocket(serverPort);       
     }
     
-    public void startServer() {
-        
-    }
-    
     public void setServerProperties() {
         
         Properties properties = new Properties(); 
@@ -43,9 +39,15 @@ public class Server implements Closeable {
             this.serverPort = this.defaultServerPort;           
         }
     }
-    @Override
-    public void close() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public ServerSocket getServerSocket() {
+        return this.serverSocket;
     }
     
+    @Override
+    public void close() throws IOException {
+        if(this.serverSocket != null) {
+            this.serverSocket.close();
+        }        
+    }    
 }
