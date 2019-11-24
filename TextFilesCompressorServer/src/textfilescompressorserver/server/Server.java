@@ -22,9 +22,29 @@ public class Server implements Closeable {
     
     private ServerSocket serverSocket;
     
-    public Server() throws IOException {
+    public Server() {
+        
         setServerProperties();
-        this.serverSocket = new ServerSocket(serverPort);       
+    }
+    
+    public void startServer() {
+             
+        int port = this.serverPort;
+        boolean binded = false;
+        
+        while(!binded) {
+            try {
+                this.serverSocket = new ServerSocket(port);  
+                this.serverPort = port;
+                binded = true;
+            } catch(IOException e) {
+                System.err.println("Failed to start server on port " + port + "\nReason: " + e.getMessage());
+                System.out.println("\nNow trying to start server on different port...");
+                ++port;
+            }
+        } 
+        
+        System.out.println("\nServer started successfuly on port " + port + " On address: " + this.serverSocket.getInetAddress());
     }
     
     public void setServerProperties() {
