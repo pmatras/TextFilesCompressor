@@ -1,7 +1,9 @@
 package textfilescompressorserver.server;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -12,10 +14,14 @@ import java.net.Socket;
 public class SingleServiceConnection implements Closeable {
     
     private Socket socket;
+    private BufferedReader clientsInput;
+    private PrintWriter clientsOutput;
 
     @Override
     public void close() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+        
+        if(this.socket != null) {
+            this.socket.close();
+        }        
+    }    
 }
