@@ -3,6 +3,7 @@ package textfilescompressorserver.servercontroller;
 import java.io.Closeable;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Properties;
 
 /**
@@ -16,8 +17,15 @@ public class Server implements Closeable {
     private String outFileName;
     private String mode;
     private final String propertiesFileName = ".properties";
-    private String serverPort;
-    private final String defaultServerPort = "8888";
+    private int serverPort;
+    private final int defaultServerPort = 8888;
+    
+    private ServerSocket serverSocket;
+    
+    public Server() throws IOException {
+        setServerProperties();
+        this.serverSocket = new ServerSocket(serverPort);       
+    }
     
     public void startServer() {
         
@@ -29,9 +37,9 @@ public class Server implements Closeable {
         
         try(FileInputStream propertiesFile = new FileInputStream(propertiesFileName)) {
             properties.load(propertiesFile);
-            this.serverPort = properties.getProperty("port");            
+            this.serverPort = Integer.parseInt(properties.getProperty("port"));            
         } catch(IOException e) {
-            System.err.println("No server port specified in .properties file!\nServer will work on default port number = " + this.defaultServerPort );
+            System.err.println(e.getMessage() + "\nNo server port specified in .properties file!\nServer will work on default port number = " + this.defaultServerPort );
             this.serverPort = this.defaultServerPort;           
         }
     }
