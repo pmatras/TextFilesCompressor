@@ -81,7 +81,7 @@ public class ServerController {
     
     private void processClientsRequest(Map<String, String> args) {
         
-        this.mode = args.get("mode");
+        this.mode = (args.get("mode") != null) ? args.get("mode") : "";
         ServerFilesCompressor filesCompressor = null;
         
         if(this.mode.equals(Mode.COMPRESS.toString().toLowerCase())) {            
@@ -107,7 +107,9 @@ public class ServerController {
             } catch(IOException e) {                
                 this.service.sendMessageToClient("Problem while decompressing file. Can not finish: " + e.getMessage());
             }
-        }    
+        } else {
+            this.service.sendMessageToClient("Wrong arguments passed! Try again...");
+        }  
     }
     
     private Map<String, String> parseArguments(List<String> args) {
