@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import textfilescompressorserver.servermodel.ServerFilesCompressor;
+import textfilescompressorserver.servermodel.SingleInstanceOfServerFileCompressorGuard;
 
 /**
  *
@@ -44,13 +46,15 @@ public class ServerController {
                 clientsInput = this.service.getClientsInput();
                 if(!clientsInput.toLowerCase().equals("start")) {
                     args.add(clientsInput);
-                }                
-                this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
+                    this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
+                } else {
+                    this.service.sendMessageToClient("Starting processing your request...");
+                }                 
             } catch(IOException e) {
                 System.err.println("Exception occured while getting input from client - reason: " + e.getMessage());
             }
             
-        } while(!clientsInput.toLowerCase().equals("start"));         
+        } while(!clientsInput.toLowerCase().equals("start"));
         
         try { 
             this.service.close();
