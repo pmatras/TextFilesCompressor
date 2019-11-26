@@ -45,14 +45,16 @@ public class ServerController {
         this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server!");
         
         do {
+            this.service.sendMessageToClient("Please type arguments:\n");
+            args.clear();
             do{
                 try{
                     clientsInput = this.service.getClientsInput();
                     if(!clientsInput.toLowerCase().equals("start")) {
                         args.add(clientsInput);
-                        this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
+                        this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString() + "\n");
                     } else {
-                        this.service.sendMessageToClient("Starting processing your request..."); 
+                        this.service.sendMessageToClient("\nStarting processing your request...\n"); 
                     }      
                 } catch(IOException e) {
                     System.err.println("Exception occured while getting input from client - reason: " + e.getMessage());
@@ -62,7 +64,7 @@ public class ServerController {
             Map<String, String> parsedArgs = parseArguments(args);
             processClientsRequest(parsedArgs); 
             
-            this.service.sendMessageToClient("Type 'quit' to exit or press enter to continue...");
+            this.service.sendMessageToClient("Type 'quit' to exit or press enter to continue...\n");
             try{
                 clientsInput = this.service.getClientsInput();
             } catch(IOException e) {
@@ -89,7 +91,7 @@ public class ServerController {
             
             try {
                 if(filesCompressor.compressFile()) {                    
-                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " compressed succesfully into file " + args.get("outputFileName"));
+                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " compressed succesfully into file " + args.get("outputFileName") + "\n");
                 }
             } catch(WrongFilePassedException e) {                
                 this.service.sendMessageToClient("File to compress not found: " + e.getMessage());
@@ -100,15 +102,15 @@ public class ServerController {
             filesCompressor = SingleInstanceOfServerFileCompressorGuard.getFilesCompressor("", args.get("inputFileName"), args.get("outputFileName"));            
             try {
                 if(filesCompressor.decompressFile()) {                    
-                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " decompressed successfully into file " + args.get("outputFileName"));
+                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " decompressed successfully into file " + args.get("outputFileName") + "\n");
                 }
             } catch(WrongFilePassedException e) {                    
-                    this.service.sendMessageToClient("Problem while opening file to decompress. Can not finish: " + e.getMessage());                 
+                    this.service.sendMessageToClient("Problem while opening file to decompress. Can not finish: " + e.getMessage() + "\n");                 
             } catch(IOException e) {                
-                this.service.sendMessageToClient("Problem while decompressing file. Can not finish: " + e.getMessage());
+                this.service.sendMessageToClient("Problem while decompressing file. Can not finish: " + e.getMessage() + "\n");
             }
         } else {
-            this.service.sendMessageToClient("Wrong arguments passed! Try again...");
+            this.service.sendMessageToClient("Wrong arguments passed! Try again...\n");
         }  
     }
     
