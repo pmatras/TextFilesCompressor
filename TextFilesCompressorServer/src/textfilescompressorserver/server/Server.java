@@ -47,7 +47,7 @@ public class Server implements Closeable {
         System.out.println("\nServer started successfuly on port " + port + " On address: " + this.serverSocket.getInetAddress());
     }
     
-    public void setServerProperties() {
+    private void setServerProperties() {
         
         Properties properties = new Properties(); 
         
