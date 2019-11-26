@@ -137,4 +137,16 @@ public class ServerFilesCompressor implements CompressorInterface {
         return true;
     }
     
+    public void setFileToCompressName(String fileName){
+        this.fileToCompressName = fileName;
+    }
+    
+    public void setFileToDecompressName(String fileName) {
+        this.fileToDecompressName = fileName;
+    }
+    
+    public void setOutputFileName(String fileName) {
+        this.outputFileName = fileName;
+    }
+    
 }
