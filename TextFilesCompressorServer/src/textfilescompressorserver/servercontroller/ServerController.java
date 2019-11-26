@@ -97,4 +97,10 @@ public class ServerController {
        return arguments;
     }
     
+    private enum Mode {
+        
+        COMPRESS,
+        DECOMPRESS
+    }
+    
 }
