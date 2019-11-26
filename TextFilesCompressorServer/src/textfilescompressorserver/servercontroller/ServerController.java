@@ -44,23 +44,31 @@ public class ServerController {
        
         this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server!");
         
-        do{
+        do {
+            do{
+                try{
+                    clientsInput = this.service.getClientsInput();
+                    if(!clientsInput.toLowerCase().equals("start")) {
+                        args.add(clientsInput);
+                        this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
+                    } else {
+                        this.service.sendMessageToClient("Starting processing your request..."); 
+                    }      
+                } catch(IOException e) {
+                    System.err.println("Exception occured while getting input from client - reason: " + e.getMessage());
+                }
+            } while(!clientsInput.toLowerCase().equals("start"));
+            
+            Map<String, String> parsedArgs = parseArguments(args);
+            processClientsRequest(parsedArgs); 
+            
+            this.service.sendMessageToClient("Type 'quit' to exit or press enter to continue...");
             try{
                 clientsInput = this.service.getClientsInput();
-                if(!clientsInput.toLowerCase().equals("start")) {
-                    args.add(clientsInput);
-                    this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
-                } else {
-                    this.service.sendMessageToClient("Starting processing your request..."); 
-                }                 
             } catch(IOException e) {
                 System.err.println("Exception occured while getting input from client - reason: " + e.getMessage());
             }
-            
-        } while(!clientsInput.toLowerCase().equals("start"));
-        
-        Map<String, String> parsedArgs = parseArguments(args);
-        processClientsRequest(parsedArgs); 
+        } while(!clientsInput.toLowerCase().equals("quit"));        
        
         try { 
             this.service.close();
