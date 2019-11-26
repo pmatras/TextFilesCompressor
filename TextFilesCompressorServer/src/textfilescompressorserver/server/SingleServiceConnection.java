@@ -32,7 +32,24 @@ public class SingleServiceConnection implements Closeable {
             new InputStreamReader(
             this.socket.getInputStream()));
     }
-
+    
+    public String getClientsInput() throws IOException {
+        
+        String clientsMessage = null;
+        try {
+            clientsMessage = this.clientsInput.readLine();            
+        } catch(IOException e) {
+            throw e;
+        }
+        
+        return clientsMessage;
+    }
+    
+    public void sendMessageToClient(String message) {
+        
+        this.clientsOutput.println(message);           
+    }
+    
     @Override
     public void close() throws IOException {
         
