@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import textfilescompressorserver.servermodel.ServerFilesCompressor;
 import textfilescompressorserver.servermodel.SingleInstanceOfServerFileCompressorGuard;
+import textfilescompressorserver.servermodel.WrongFilePassedException;
 
 /**
  *
@@ -21,6 +22,8 @@ public class ServerController {
     private Server server = null;
     private Socket socket = null;
     private SingleServiceConnection service = null;
+    
+    private String mode;
     
     public ServerController() {
         
@@ -48,7 +51,7 @@ public class ServerController {
                     args.add(clientsInput);
                     this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
                 } else {
-                    this.service.sendMessageToClient("Starting processing your request...");
+                    this.service.sendMessageToClient("Starting processing your request..."); 
                 }                 
             } catch(IOException e) {
                 System.err.println("Exception occured while getting input from client - reason: " + e.getMessage());
@@ -56,6 +59,9 @@ public class ServerController {
             
         } while(!clientsInput.toLowerCase().equals("start"));
         
+        Map<String, String> parsedArgs = parseArguments(args);
+        processClientsRequest(parsedArgs); 
+       
         try { 
             this.service.close();
             System.out.println("Socket closed.");        
@@ -63,6 +69,37 @@ public class ServerController {
             System.err.println("Failed to close service, reason: " + e.getMessage());
         }
         
+    }
+    
+    private void processClientsRequest(Map<String, String> args) {
+        
+        this.mode = args.get("mode");
+        ServerFilesCompressor filesCompressor = null;
+        
+        if(this.mode.equals(Mode.COMPRESS.toString().toLowerCase())) {            
+            filesCompressor = SingleInstanceOfServerFileCompressorGuard.getFilesCompressor(args.get("inputFileName"), "", args.get("outputFileName"));
+            
+            try {
+                if(filesCompressor.compressFile()) {                    
+                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " compressed succesfully into file " + args.get("outputFileName"));
+                }
+            } catch(WrongFilePassedException e) {                
+                this.service.sendMessageToClient("File to compress not found: " + e.getMessage());
+            } catch(IOException e) {                
+                this.service.sendMessageToClient("Problem occured while compressing file: " + e.getMessage());
+            }            
+        } else if(this.mode.equals(Mode.DECOMPRESS.toString().toLowerCase())) {            
+            filesCompressor = SingleInstanceOfServerFileCompressorGuard.getFilesCompressor("", args.get("inputFileName"), args.get("outputFileName"));            
+            try {
+                if(filesCompressor.decompressFile()) {                    
+                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " decompressed successfully into file " + args.get("outputFileName"));
+                }
+            } catch(WrongFilePassedException e) {                    
+                    this.service.sendMessageToClient("Problem while opening file to decompress. Can not finish: " + e.getMessage());                 
+            } catch(IOException e) {                
+                this.service.sendMessageToClient("Problem while decompressing file. Can not finish: " + e.getMessage());
+            }
+        }    
     }
     
     private Map<String, String> parseArguments(List<String> args) {
