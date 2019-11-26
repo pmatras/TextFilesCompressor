@@ -61,4 +61,36 @@ public class ServerController {
         
     }
     
+    private Map<String, String> parseArguments(List<String> args) {
+        
+        Map<String, String> arguments = new HashMap<String, String>();
+        
+        String previousParam = "";
+        
+        for(String param : args) {
+            
+            if(param.equals("-c")) {
+                arguments.put("mode", "compress");
+                continue;
+            }
+            if(param.equals("-d")) {
+                arguments.put("mode", "decompress");
+                continue;
+            }
+            if(previousParam.equals("-i") && !param.equals("-o")) {
+                arguments.put("inputFileName", param);
+                previousParam = "";
+                continue;
+            }
+            if(previousParam.equals("-o") && !param.equals("-i")) {
+                arguments.put("outputFileName", param);
+                previousParam = "";
+                continue;
+            }                
+                previousParam = param;                                       
+        }        
+        
+       return arguments;
+    }
+    
 }
