@@ -42,7 +42,7 @@ public class ServerController {
         String clientsInput = "";
         List<String> args = new ArrayList<String>();
        
-        this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server!");
+        this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server! To get HELP please type 'help'");
         
         do {
             this.service.sendMessageToClient("Please type arguments:\n");
@@ -50,12 +50,14 @@ public class ServerController {
             do{
                 try{
                     clientsInput = this.service.getClientsInput();
-                    if(!clientsInput.toLowerCase().equals("start")) {
+                    if(!clientsInput.toLowerCase().equals("start") && !clientsInput.toLowerCase().equals("help")) {
                         args.add(clientsInput);
                         this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString() + "\n");
-                    } else {
+                    } else if(clientsInput.toLowerCase().equals("start")) {
                         this.service.sendMessageToClient("\nStarting processing your request...\n"); 
-                    }      
+                    } else {
+                        sendHelpToClient();
+                    }    
                 } catch(IOException e) {
                     System.err.println("Exception occured while getting input from client - reason: " + e.getMessage());
                 }
@@ -150,6 +152,15 @@ public class ServerController {
         }        
         
        return arguments;
+    }
+    
+    private void sendHelpToClient() {
+        
+        this.service.sendMessageToClient("\nHelp for FilesCompressor server...\n\n");
+        this.service.sendMessageToClient("-c : compress mode\n");
+        this.service.sendMessageToClient("-d : decompress mode\n");
+        this.service.sendMessageToClient("-i : input file, after this parameter please specify input file, which will be compressed/decompressed\n");
+        this.service.sendMessageToClient("-o : output file, after this parameter please specify output file in which compressed/decompressed input file will be saved\n\n");
     }
     
     private enum Mode {
