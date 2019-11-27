@@ -60,10 +60,10 @@ public class ServerController {
         String clientsInput = "";
         List<String> args = new ArrayList<String>();
        
-        this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server! To get HELP please type 'help'");
+        this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server! To get HELP please type 'help'\n");
         
         do {
-            this.service.sendMessageToClient("Please type arguments:\n");
+            this.service.sendMessageToClient("Please type arguments and type start after that to start compressing/decompressing file:\n");
             args.clear();
             do{
                 try{
@@ -193,7 +193,8 @@ public class ServerController {
         this.service.sendMessageToClient("-c : compress mode\n");
         this.service.sendMessageToClient("-d : decompress mode\n");
         this.service.sendMessageToClient("-i : input file, after this parameter please specify input file, which will be compressed/decompressed\n");
-        this.service.sendMessageToClient("-o : output file, after this parameter please specify output file in which compressed/decompressed input file will be saved\n\n");
+        this.service.sendMessageToClient("-o : output file, after this parameter please specify output file in which compressed/decompressed input file will be saved\n");
+        this.service.sendMessageToClient("start : starts compressing/decompressing a file\n\n");
     }
     
     /**
