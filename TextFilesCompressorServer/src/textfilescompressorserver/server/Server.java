@@ -13,9 +13,6 @@ import java.util.Properties;
  */
 public class Server implements Closeable {
     
-    private String inFileName;
-    private String outFileName;
-    private String mode;
     private final String propertiesFileName = ".properties";
     private int serverPort;
     private final int defaultServerPort = 8888;
