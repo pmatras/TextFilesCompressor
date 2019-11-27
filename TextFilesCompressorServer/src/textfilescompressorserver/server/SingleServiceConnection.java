@@ -16,10 +16,26 @@ import java.net.Socket;
  */
 public class SingleServiceConnection implements Closeable {
     
+    /**
+     * socket - represents connection to the client
+     */
     private Socket socket;
+    /**
+     * clientsInput - buffered input character stream
+     */
     private BufferedReader clientsInput;
+    /**
+     * clientsOutput - formatted output character stream
+     */
     private PrintWriter clientsOutput;
     
+    /**
+     * 
+     * @param socket - socket which represents connection to the client
+     * @throws IOException when creating input or output stream exception occurs
+     * Constructor of SingleServiceConnection class which assigns input and output streams 
+     * to proper class fields
+     */
     public SingleServiceConnection(Socket socket) throws IOException {
         
         this.socket = socket;
@@ -33,6 +49,12 @@ public class SingleServiceConnection implements Closeable {
             this.socket.getInputStream()));
     }
     
+    /**
+     * 
+     * @return message sent by client as String
+     * @throws IOException when exception occurs when getting input from client
+     * Gets input sent by client
+     */
     public String getClientsInput() throws IOException {
         
         String clientsMessage = null;
@@ -45,11 +67,21 @@ public class SingleServiceConnection implements Closeable {
         return clientsMessage;
     }
     
+    /**
+     * 
+     * @param message to send to the client as String
+     * Sends message to the client
+     */
     public void sendMessageToClient(String message) {
         
         this.clientsOutput.println(message);           
     }
     
+    /**
+     * 
+     * @throws IOException when exception occurs when closing socket
+     * Closes the socket
+     */
     @Override
     public void close() throws IOException {
         

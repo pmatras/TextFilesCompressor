@@ -13,17 +13,37 @@ import java.util.Properties;
  */
 public class Server implements Closeable {
     
+    /**
+     * propertiesFileName - const which specify .properties file name, when server properties are stored
+     */
     private final String propertiesFileName = ".properties";
+    /**
+     * serverPort - port on which server is working
+     */
     private int serverPort;
+    /**
+     * defaultServerPort - default port number on which server is working - it is used if port is not specified in .properties file
+     */
     private final int defaultServerPort = 8888;
     
+    /**
+     * serverSocket - represents the socket waiting for client connection
+     */    
     private ServerSocket serverSocket;
     
+    /**
+     * Call setServerProperties method which parse server properties from .properties file
+     */
     public Server() {
         
         setServerProperties();
     }
     
+    /**
+     * Starts server - creates the ServerSocket starting from port specified in .properties file
+     * (or default port specified in field defaultServerPort) until it will create ServerSocket
+     * on port which is not already binded
+     */
     public void startServer() {
              
         int port = this.serverPort;
@@ -44,6 +64,10 @@ public class Server implements Closeable {
         System.out.println("\nServer started successfuly on port " + port + " On address: " + this.serverSocket.getInetAddress());
     }
     
+    /**
+     * Sets server properties which are stored in .properties file
+     * or use defaultServerPort if server port is not specified in .properties
+     */
     private void setServerProperties() {
         
         Properties properties = new Properties(); 
@@ -57,10 +81,20 @@ public class Server implements Closeable {
         }
     }
     
+    /**
+     * 
+     * @return returns ServerSocket class instance
+     * Getter for field serverSocket
+     */
     public ServerSocket getServerSocket() {
         return this.serverSocket;
     }
     
+    /**
+     * 
+     * @throws IOException if closing of serverSocket was unsuccessfull
+     * Closes the ServerSocket
+     */
     @Override
     public void close() throws IOException {
         if(this.serverSocket != null) {

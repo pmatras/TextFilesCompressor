@@ -18,13 +18,27 @@ import textfilescompressorserver.servermodel.WrongFilePassedException;
  * @version 1.0
  */
 public class ServerController {
-    
+    /**
+     * server - object of Server class representing working server
+     */
     private Server server = null;
+    /**
+     * socket - object which represents connection to the client
+     */
     private Socket socket = null;
+    /**
+     * service - object of SingleServiceConnection class representing single connection to the client
+     */
     private SingleServiceConnection service = null;
     
+    /**
+     * mode - mode of filesCompressor (compression or decompression)
+     */    
     private String mode;
     
+    /**
+     * constructor of ServerController class
+     */
     public ServerController() {
         
         this.server = new Server();   
@@ -37,6 +51,10 @@ public class ServerController {
         }
     }
     
+    /**
+     * Main method of ServerController - gets arguments from user to start compressing/decompressing file,
+     * parses them and process client's request - start compressing or decompressing file specified by client
+     */
     public void run() {
         
         String clientsInput = "";
@@ -89,6 +107,12 @@ public class ServerController {
         }        
     }
     
+    /**
+     * 
+     * @param args - map which contains arguments from user mapped to its meanings to the program
+     * Method call compress or decompress method from object of class ServerFilesCompressor,
+     * depending on arguments passed by client and sends to client proper messages
+     */
     private void processClientsRequest(Map<String, String> args) {
         
         this.mode = (args.get("mode") != null) ? args.get("mode") : "";
@@ -122,6 +146,12 @@ public class ServerController {
         }  
     }
     
+    /**
+     * 
+     * @param args - list, which contains all arguments passed by client
+     * @return Map which contains client's arguments mapped to its meanings in program
+     * Method parses arguments passed by client until client typed 'start' command
+     */
     private Map<String, String> parseArguments(List<String> args) {
         
         Map<String, String> arguments = new HashMap<String, String>();
@@ -154,6 +184,9 @@ public class ServerController {
        return arguments;
     }
     
+    /**
+     * Method sends help to client, it's called after client type 'help' command
+     */
     private void sendHelpToClient() {
         
         this.service.sendMessageToClient("\nHelp for FilesCompressor server...\n\n");
@@ -163,6 +196,9 @@ public class ServerController {
         this.service.sendMessageToClient("-o : output file, after this parameter please specify output file in which compressed/decompressed input file will be saved\n\n");
     }
     
+    /**
+     * Available modes of ServerFilesCompressor 
+     */
     private enum Mode {
         
         COMPRESS,
