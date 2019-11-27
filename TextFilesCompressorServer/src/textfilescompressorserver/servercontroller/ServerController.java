@@ -79,6 +79,12 @@ public class ServerController {
             System.err.println("Failed to close service, reason: " + e.getMessage());
         }
         
+        try { 
+            this.server.close();
+            System.out.println("Server closed.");        
+        } catch(IOException e) {
+            System.err.println("Failed to close server, reason: " + e.getMessage());
+        }        
     }
     
     private void processClientsRequest(Map<String, String> args) {
