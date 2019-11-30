@@ -87,4 +87,11 @@ public class ClientsSocket {
     public String getServerHost() {
         return this.serverHost;
     }
+    
+    public void closeSocket() throws IOException {
+        
+        if(this.socket != null) {
+            this.socket.close();
+        }
+    }
 }
