@@ -21,7 +21,8 @@ public class ClientsSocket {
     
     private final String propertiesFileName = ".properties";
     private String serverHost;
-    private int serverPort;
+    private final String defaultServerHost = "localhost";
+    private int serverPort = 0;
     private final int defaultServerPort = 8888;
     
     public ClientsSocket() {
@@ -29,6 +30,7 @@ public class ClientsSocket {
         setServerProperties(); 
         
         try {
+            this.socket = new Socket(serverHost, serverPort);
             this.outputFromServer = new BufferedReader(
             new InputStreamReader(
             this.socket.getInputStream()));            
@@ -48,7 +50,11 @@ public class ClientsSocket {
             this.serverHost = properties.getProperty("host");
         } catch(IOException e) {
             System.err.println(e.getMessage() + "\nNo server port specified in .properties file!\nClient will try to connect to server on default port number = " + this.defaultServerPort );
-            this.serverPort = this.defaultServerPort;           
+            if(this.serverPort == 0) {
+                this.serverPort = this.defaultServerPort;                
+            } else if(this.serverHost == null) {
+                this.serverHost = defaultServerHost;
+            }               
         }
     }
     
