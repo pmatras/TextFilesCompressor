@@ -32,10 +32,12 @@ public class ClientsSocket {
         try {
             this.socket = new Socket(serverHost, serverPort);
             this.outputFromServer = new BufferedReader(
-            new InputStreamReader(
-            this.socket.getInputStream()));            
+                new InputStreamReader(
+                this.socket.getInputStream()));   
+            this.outputForServer = new DataOutputStream(
+                this.socket.getOutputStream());
         } catch(IOException e) {
-            System.err.println("Unable to get InputStream, reason: " + e.getMessage());            
+            System.err.println("Unable to initialize connection with server, reason: " + e.getMessage());            
         }
         
     }
