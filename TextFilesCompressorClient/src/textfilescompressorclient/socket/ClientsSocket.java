@@ -60,6 +60,26 @@ public class ClientsSocket {
         }
     }
     
+    private void sendMessageToServer(String message) {
+        
+        try {
+            this.outputForServer.writeBytes(message + "\n");            
+        } catch(IOException e) {
+            System.err.println("Unable to send message to server, reason: " + e.getMessage());
+        }        
+    }
+    
+    private String readMessageFromServer() {
+        
+        String messageFromServer = "";
+        try {
+             messageFromServer =  this.outputFromServer.readLine();
+        } catch(IOException e) {
+            System.err.println("Unable to read message from server, reason: " + e.getMessage());
+        }
+       return messageFromServer;
+    }
+    
     public int getServerPort() {
         return this.serverPort;
     }
