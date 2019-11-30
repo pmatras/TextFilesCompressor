@@ -60,7 +60,7 @@ public class ClientsSocket {
         }
     }
     
-    private void sendMessageToServer(String message) {
+    public void sendMessageToServer(String message) {
         
         try {
             this.outputForServer.writeBytes(message + "\n");            
@@ -69,7 +69,7 @@ public class ClientsSocket {
         }        
     }
     
-    private String readMessageFromServer() {
+    public String readMessageFromServer() {
         
         String messageFromServer = "";
         try {
