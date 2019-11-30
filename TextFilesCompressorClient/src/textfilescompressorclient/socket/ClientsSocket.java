@@ -40,5 +40,13 @@ public class ClientsSocket {
             System.err.println(e.getMessage() + "\nNo server port specified in .properties file!\nClient will try to connect to server on default port number = " + this.defaultServerPort );
             this.serverPort = this.defaultServerPort;           
         }
-    }    
+    }
+    
+    public int getServerPort() {
+        return this.serverPort;
+    }
+    
+    public String getServerHost() {
+        return this.serverHost;
+    }
 }
