@@ -5,8 +5,12 @@
  */
 package textfilescompressorclient.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import textfilescompressorclient.socket.ClientsSocket;
 import textfilescompressorclient.view.ClientsInterface;
 
 /**
@@ -28,7 +32,55 @@ public class ClientServerFlowGuard {
     
     public void runClient() {
         
-        ClientsInterface view = new ClientsInterface();
+        ClientsSocket socket = new ClientsSocket();       
+        ClientsInterface view = new ClientsInterface(); 
+        view.printMessageForClient("Connected to server on address: " + socket.getServerHost() + ":" + socket.getServerPort());
+        boolean closeSocket = false;
+        List<String> messagesForServer = new ArrayList<>();
+        
+        view.printMessageForClient(socket.readMessageFromServer());
+        
+        do {
+            getArgsFromUser(view);
+            messagesForServer.clear();
+            if(this.mode.equals(Mode.compress.toString())) {
+                 messagesForServer.add("-c");                 
+            } else {
+            messagesForServer.add("-d");
+            }
+            messagesForServer.add("-i");
+            messagesForServer.add(this.inFileName);
+            messagesForServer.add("-o");
+            messagesForServer.add(this.outFileName);
+            messagesForServer.add("start");
+            
+            view.printMessageForClient("Sending your request to server...\nServer will be responding with status codes."); 
+            socket.readMessageFromServer();
+            
+            for(String arg : messagesForServer) {
+                socket.sendMessageToServer(arg);
+                view.printMessageForClient(socket.readMessageFromServer());
+            }
+            
+            view.printMessageForClient(socket.readMessageFromServer());
+            socket.readMessageFromServer();
+            view.printMessageForClient("Please type 'quit' to exit or type anything to continue...");
+            
+            if(this.scanner.next().toLowerCase().equals("quit")) {
+                closeSocket = true;
+                socket.sendMessageToServer("quit");
+            } else {
+                socket.sendMessageToServer("continue");
+            }
+            
+        } while(closeSocket == false);
+        
+        try {
+            socket.closeSocket();
+            System.out.println("Connection with server closed.");
+        } catch(IOException e) {
+            System.err.println("Unable to close connection with server, reason: " + e.getMessage());
+        }        
     }
     
     private void getArgsFromUser(final ClientsInterface view) {
