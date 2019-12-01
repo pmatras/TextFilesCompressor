@@ -19,17 +19,46 @@ import java.util.Properties;
  * @version 1.0
  */
 public class ClientsSocket {
-    
+    /**
+     * socket - represents connection to the server
+     */
     private Socket socket;
+    /**
+     * outputForServer - formatted output character stream
+     */
     private PrintWriter outputForServer;
+    /**
+     * outputFromServer - buffered input character stream
+     */
     private BufferedReader outputFromServer;
     
+    /**
+     * propertiesFileName - const which specify .properties file name, when server properties are stored
+     */
     private final String propertiesFileName = ".properties";
+    /**
+     * serverHost - name of host on which server runs
+     */
     private String serverHost;
+    /**
+     * defaultServerHost - name of host on which server runs to use when hostname isn't specified
+     * in .properties file
+     */
     private final String defaultServerHost = "localhost";
+    /***
+     * serverPort - port number on which server is listening
+     */
     private int serverPort = 0;
+    /**
+     * defaultServerPort - port number on which server is listening to use when port number
+     * isn't specified in .properties file
+     */
     private final int defaultServerPort = 8888;
     
+    /**
+     * default constructor of class - invokes method which sets server properties from
+     * .properties file, creates socket and assigns input and output streams 
+     */
     public ClientsSocket() {
         
         setServerProperties(); 
@@ -48,6 +77,10 @@ public class ClientsSocket {
         }        
     }
     
+    /**
+     * sets server properties from .properties file, in case of not specified
+     * proper properties in .properties file, mathod sets default server properties
+     */
     private void setServerProperties() {
         
         Properties properties = new Properties(); 
@@ -66,11 +99,21 @@ public class ClientsSocket {
         }
     }
     
+    /**
+     * 
+     * @param message - String message which will be send to the server
+     * Sends message to the server
+     */
     public void sendMessageToServer(String message) {
         
         this.outputForServer.println(message);      
     }
     
+    /**
+     * 
+     * @return String message from server
+     * Reads input from server
+     */
     public String readMessageFromServer() {
         
         String messageFromServer = "";
@@ -82,14 +125,29 @@ public class ClientsSocket {
        return messageFromServer;
     }
     
+    /**
+     * 
+     * @return int port number
+     * Getter for field serverPort
+     */
     public int getServerPort() {
         return this.serverPort;
     }
     
+    /**
+     * 
+     * @return String server host
+     * Getter for field serverHost
+     */
     public String getServerHost() {
         return this.serverHost;
     }
     
+    /**
+     * 
+     * @throws IOException when closing socket threw exception
+     * Closes socket
+     */
     public void closeSocket() throws IOException {
         
         if(this.socket != null) {

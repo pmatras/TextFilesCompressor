@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package textfilescompressorclient.controller;
 
 import java.io.IOException;
@@ -20,16 +15,35 @@ import textfilescompressorclient.view.ClientsInterface;
  */
 public class ClientServerFlowGuard {
     
+    /**
+     * scanner - instance of class Scanner to get input from client
+     */
     private final Scanner scanner;
+    /**
+     * inFileName - name of input file, which will be used for textFilesCompressor
+     */
     private String inFileName;
+    /**
+     * outFileName - name of output file, which will be used for textFilesCompressor
+     */
     private String outFileName;
+    /**
+     * mode - mode of textFilesCompressor(compressing or decompressing)
+     */
     private String mode;
     
+    /**
+     * Default constructor - assigns new instance of Scanner class to scanner field
+     */
     public ClientServerFlowGuard() {
         
         this.scanner = new Scanner(System.in);
     }
     
+    /**
+     * Main method of client's program - creates new instances of ClientsScoket and ClientsInterface classes
+     * Handles getting from client arguments for server and sends it to the server, also reads output from server
+     */
     public void runClient() {
         
         ClientsSocket socket = new ClientsSocket();       
@@ -83,6 +97,11 @@ public class ClientServerFlowGuard {
         }        
     }
     
+    /**
+     * 
+     * @param view - instance of ClientsInterface class
+     * Handles getting from client arguments for the server
+     */
     private void getArgsFromUser(final ClientsInterface view) {
         
         view.printMessageForClient("Please enter input file name with its extension:");
@@ -114,6 +133,9 @@ public class ClientServerFlowGuard {
         }         
     }
     
+    /**
+     * Mode - enum class with possible working modes of textFilesCompressor
+     */
      private enum Mode {
         
         compress,
