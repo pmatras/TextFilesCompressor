@@ -60,19 +60,20 @@ public class ServerController {
         String clientsInput = "";
         List<String> args = new ArrayList<String>();
        
-        this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server! To get HELP please type 'help'\n");
+        this.service.sendMessageToClient("Welcome to Java TextFilesCompressor Server! To get HELP please type 'help'");
         
         do {
-            this.service.sendMessageToClient("Please type arguments and type start after that to start compressing/decompressing file:\n");
+            this.service.sendMessageToClient("Please type arguments and type start after that to start compressing/decompressing file:");
             args.clear();
             do{
                 try{
                     clientsInput = this.service.getClientsInput();
+                    System.out.println("Client sent: " + clientsInput);
                     if(!clientsInput.toLowerCase().equals("start") && !clientsInput.toLowerCase().equals("help")) {
                         args.add(clientsInput);
-                        this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString() + "\n");
+                        this.service.sendMessageToClient("Status code " + Status.ACCEPTED.ordinal() + " - " + Status.ACCEPTED.toString());
                     } else if(clientsInput.toLowerCase().equals("start")) {
-                        this.service.sendMessageToClient("\nStarting processing your request...\n"); 
+                        this.service.sendMessageToClient("Starting processing your request..."); 
                     } else {
                         sendHelpToClient();
                     }    
@@ -84,7 +85,7 @@ public class ServerController {
             Map<String, String> parsedArgs = parseArguments(args);
             processClientsRequest(parsedArgs); 
             
-            this.service.sendMessageToClient("Type 'quit' to exit or press enter to continue...\n");
+            this.service.sendMessageToClient("Type 'quit' to exit or press enter to continue...");
             try{
                 clientsInput = this.service.getClientsInput();
             } catch(IOException e) {
@@ -123,7 +124,7 @@ public class ServerController {
             
             try {
                 if(filesCompressor.compressFile()) {                    
-                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " compressed succesfully into file " + args.get("outputFileName") + "\n");
+                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " compressed succesfully into file " + args.get("outputFileName"));
                 }
             } catch(WrongFilePassedException e) {                
                 this.service.sendMessageToClient("File to compress not found: " + e.getMessage());
@@ -134,15 +135,15 @@ public class ServerController {
             filesCompressor = SingleInstanceOfServerFileCompressorGuard.getFilesCompressor("", args.get("inputFileName"), args.get("outputFileName"));            
             try {
                 if(filesCompressor.decompressFile()) {                    
-                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " decompressed successfully into file " + args.get("outputFileName") + "\n");
+                    this.service.sendMessageToClient("File " + args.get("inputFileName") + " decompressed successfully into file " + args.get("outputFileName"));
                 }
             } catch(WrongFilePassedException e) {                    
                     this.service.sendMessageToClient("Problem while opening file to decompress. Can not finish: " + e.getMessage() + "\n");                 
             } catch(IOException e) {                
-                this.service.sendMessageToClient("Problem while decompressing file. Can not finish: " + e.getMessage() + "\n");
+                this.service.sendMessageToClient("Problem while decompressing file. Can not finish: " + e.getMessage());
             }
         } else {
-            this.service.sendMessageToClient("Wrong arguments passed! Try again...\n");
+            this.service.sendMessageToClient("Wrong arguments passed! Try again...");
         }  
     }
     
@@ -189,12 +190,11 @@ public class ServerController {
      */
     private void sendHelpToClient() {
         
-        this.service.sendMessageToClient("\nHelp for FilesCompressor server...\n\n");
-        this.service.sendMessageToClient("-c : compress mode\n");
-        this.service.sendMessageToClient("-d : decompress mode\n");
-        this.service.sendMessageToClient("-i : input file, after this parameter please specify input file, which will be compressed/decompressed\n");
-        this.service.sendMessageToClient("-o : output file, after this parameter please specify output file in which compressed/decompressed input file will be saved\n");
-        this.service.sendMessageToClient("start : starts compressing/decompressing a file\n\n");
+        this.service.sendMessageToClient("Help for FilesCompressor server...");
+        this.service.sendMessageToClient("-c : compress mode");
+        this.service.sendMessageToClient("-d : decompress mode");
+        this.service.sendMessageToClient("-i : input file, after this parameter please specify input file, which will be compressed/decompressed");
+        this.service.sendMessageToClient("-o : output file, after this parameter please specify output file in which compressed/decompressed input file will be saved");
     }
     
     /**
