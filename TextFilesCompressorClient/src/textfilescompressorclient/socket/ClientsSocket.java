@@ -1,10 +1,15 @@
 package textfilescompressorclient.socket;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Properties;
 
@@ -16,7 +21,7 @@ import java.util.Properties;
 public class ClientsSocket {
     
     private Socket socket;
-    private DataOutputStream outputForServer;
+    private PrintWriter outputForServer;
     private BufferedReader outputFromServer;
     
     private final String propertiesFileName = ".properties";
@@ -32,14 +37,15 @@ public class ClientsSocket {
         try {
             this.socket = new Socket(serverHost, serverPort);
             this.outputFromServer = new BufferedReader(
-                new InputStreamReader(
-                this.socket.getInputStream()));   
-            this.outputForServer = new DataOutputStream(
-                this.socket.getOutputStream());
+                    new InputStreamReader(
+                            this.socket.getInputStream()));
+            this.outputForServer = new PrintWriter( 
+                    new BufferedWriter(
+                            new OutputStreamWriter(
+                                    socket.getOutputStream())), true);                    
         } catch(IOException e) {
             System.err.println("Unable to initialize connection with server, reason: " + e.getMessage());            
-        }
-        
+        }        
     }
     
     private void setServerProperties() {
@@ -62,11 +68,7 @@ public class ClientsSocket {
     
     public void sendMessageToServer(String message) {
         
-        try {
-            this.outputForServer.writeBytes(message + "\n");            
-        } catch(IOException e) {
-            System.err.println("Unable to send message to server, reason: " + e.getMessage());
-        }        
+        this.outputForServer.println(message);      
     }
     
     public String readMessageFromServer() {
