@@ -63,18 +63,20 @@ public class ClientsSocket {
         
         setServerProperties(); 
         
-        try {
-            this.socket = new Socket(serverHost, serverPort);
-            this.outputFromServer = new BufferedReader(
-                    new InputStreamReader(
-                            this.socket.getInputStream()));
-            this.outputForServer = new PrintWriter( 
-                    new BufferedWriter(
-                            new OutputStreamWriter(
-                                    socket.getOutputStream())), true);                    
-        } catch(IOException e) {
-            System.err.println("Unable to initialize connection with server, reason: " + e.getMessage());            
-        }        
+        do {
+            try {
+                this.socket = new Socket(serverHost, serverPort);
+                this.outputFromServer = new BufferedReader(
+                        new InputStreamReader(
+                                this.socket.getInputStream()));
+                this.outputForServer = new PrintWriter( 
+                        new BufferedWriter(
+                                new OutputStreamWriter(
+                                        socket.getOutputStream())), true);   
+                } catch(IOException e) {
+                    System.err.println("Unable to initialize connection with server, reason: " + e.getMessage());  
+                }  
+            } while(this.socket == null);
     }
     
     /**
